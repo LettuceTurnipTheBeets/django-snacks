@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 import requests
 
 
@@ -9,7 +10,15 @@ def voting(request):
     snacks = r.json()
     print(snacks)
 
-    return HttpResponse("Hello, world. You're at the voting page.")
-
+    #return HttpResponse("Hello, world. You're at the voting page.")
+    return render(
+        request,
+        'index.html',
+    )
+    
 def suggestions(request):
-    return HttpResponse("Hello, world. You're at the suggestions page.")
+    #return HttpResponse("Hello, world. You're at the suggestions page.")
+    return render(
+        request,
+        'suggestions.html'
+    )
