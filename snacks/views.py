@@ -1,19 +1,24 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from snacks.services import get_snacks
 import requests
 
 
 def voting(request):
-    url = 'https://api-snacks.nerderylabs.com/v1/snacks/?ApiKey=ff5d8fd9-80ec-40c3-8eed-87dfc966e1bc'
-    params = {}
-    r = requests.get(url, params=params)
-    snacks = r.json()
+    snacks = get_snacks()
     print(snacks)
+
+    snacks_always_purchased = []
+    for item in snacks:
+        if not item['optional']:
+            snacks_always_purchased.append(item['name'])
 
     #return HttpResponse("Hello, world. You're at the voting page.")
     return render(
         request,
-        'index.html',
+        'index.html', {
+            'snacks_always_purchased': snacks_always_purchased,
+        }
     )
     
 def suggestions(request):

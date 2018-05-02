@@ -1,6 +1,6 @@
 import requests
-from settings_secret import api_key
-url = 'https://api-snacks.nerderylabs.com/v1/snacks/?ApiKey=' + api_key
+from settings_secret import url, api_key
+url = url + api_key
 
 
 def get_snacks():

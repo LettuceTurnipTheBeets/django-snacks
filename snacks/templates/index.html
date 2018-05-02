@@ -65,7 +65,7 @@
                 </div>
             </div>
             <div class="shelf shelf_2">
-                <p class="error isHidden">Opps! You have already voted the total allowed times this month.<br />Come back next month to vote again!</p>
+                <p class="error isHidden">Oops! You have already voted the total allowed times this month.<br />Come back next month to vote again!</p>
             </div>
             <div class="split">
                 <div class="shelf shelf_2">
@@ -73,11 +73,9 @@
                         <h2 class="hdg hdg_2 mix-hdg_centered ">Snacks Always Purchased</h2>
                     </div>
                     <ul class="list list_centered">
-                        <li>Pop Tarts</li>
-                        <li>Bagels</li>
-                        <li>Ramen Noodles</li>
-                        <li>Cereal</li>
-                        <li>Trail Mix</li>
+                        {% for snack in snacks_always_purchased %}
+                        <li>{{ snack }}</li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
