@@ -94,44 +94,25 @@
                                     <th scope="col">Last Date Purchased</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Donuts</td>
-                                    <td>26</td>
-                                    <td>
-                                        <button class="btn btn_clear"><i class="icon-check icon-check_voted"></i>
-                                        </button>
-                                    </td>
-                                    <td>12/1/14</td>
-                                </tr>
-                                <tr>
-                                    <td>Spam</td>
-                                    <td>10</td>
-                                    <td>
-                                        <button class="btn btn_clear"><i class="icon-check icon-check_noVote"></i>
-                                        </button>
-                                    </td>
-                                    <td>12/1/14</td>
-                                </tr>
-                                <tr>
-                                    <td>Buckets of M&amp;M's</td>
-                                    <td>38</td>
-                                    <td>
-                                        <button class="btn btn_clear"><i class="icon-check icon-check_noVote"></i>
-                                        </button>
-                                    </td>
-                                    <td>12/1/14</td>
-                                </tr>
-                                <tr>
-                                    <td>Pistachios</td>
-                                    <td>5</td>
-                                    <td>
-                                        <button class="btn btn_clear"><i class="icon-check icon-check_noVote"></i>
-                                        </button>
-                                    </td>
-                                    <td>10/1/14</td>
-                                </tr>
-                            </tbody>
+                            
+                                
+                                <tbody>
+                                    {% for snacks in snacks_suggested %}
+                                    <form method="POST" action="vote/{{ snacks.0 }}/" class="form" novalidate>
+                                        {% csrf_token %}
+                                    <tr>
+                                        <td>{{ snacks.0 }}</td>
+                                        <td>{{ snacks.1 }}</td>
+                                        <td>
+                                            <button class="btn btn_clear"><i class="icon-check {{ snacks.2 }}" type=submit></i>
+                                            </button>
+                                        </td>
+                                        <td>{{ snacks.3 }}</td>
+                                    </tr>
+                                    </form>
+                                    {% endfor %}
+                                </tbody>
+                            
                         </table>
                     </div>
                 </div>

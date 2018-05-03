@@ -1,24 +1,62 @@
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from snacks.services import get_snacks
+from snacks.models import Snack
 import requests
 
 
 def voting(request):
     snacks = get_snacks()
-    print(snacks)
+    #print(snacks)
 
     snacks_always_purchased = []
+    snacks_suggested = []
+    suggested_date = []    
+    votes = []
+
     for item in snacks:
         if not item['optional']:
             snacks_always_purchased.append(item['name'])
+        elif item['optional']:
+            snacks_suggested.append([item['name']])
+            
+            if item['lastPurchaseDate'] == 'null':
+                 suggested_date.append('')
+            else:
+                suggested_date.append(item['lastPurchaseDate'])
+
+            try:
+                votes.append(Snack.objects.get(name=item['name']).votes)
+            except Snack.DoesNotExist:
+                votes.append(Snack.objects.create(name=name, votes=0).votes)
+
+    print(snacks_suggested)
+    for index, snack in enumerate(snacks_suggested):
+        snack.append(votes[index])
+        snack.append('icon-check_voted')
+        snack.append(suggested_date[index])       
+    print(snacks_suggested)
+
 
     return render(
         request,
         'index.html', {
             'snacks_always_purchased': snacks_always_purchased,
+            'snacks_suggested': snacks_suggested,
         }
     )
+
+def vote(request, name):
+    if request.method == 'POST':
+        print(name)
+        
+        snack = Snack.objects.get(name=name)
+        print(snack.votes)
+        snack.votes = snack.votes + 1
+        snack.save()
+        print(snack.votes)
+    
+    return HttpResponseRedirect('/voting/')
     
 def suggestions(request):
     snacks = get_snacks()
@@ -56,5 +94,6 @@ def suggest_snack(request):
             message = 'Please enter a snack location'
 
         print(message)
-
+    
+    return HttpResponseRedirect('/suggestions/')
  
