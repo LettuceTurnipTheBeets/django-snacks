@@ -37,9 +37,9 @@
         </div>
         <div class="masthead-nav" role="navigation">
             <ul>
-                <li><a href="index.html">Voting</a>
+                <li><a href="/voting/">Voting</a>
                 </li>
-                <li><a href="suggestions.html">Suggestions</a>
+                <li><a href="/suggestions/">Suggestions</a>
                 </li>
             </ul>
         </div>
@@ -57,7 +57,8 @@
             </div>
             <div class="content-centered">
                 <div class="shelf shelf_2">
-                    <form method="" action="" class="form" novalidate>
+                    <form method="POST" action="/suggest_snack/" class="form" novalidate>
+                        {% csrf_token %}
                         <fieldset class="shelf shelf_2">
                             <div class="shelf shelf_2">
                                 <div class="shelf">
@@ -66,10 +67,9 @@
                                     </label>
                                 </div>
                                 <select name="snackOptions" id="snackOptions">
-                                    <option value="snack1">snack suggestion 1</option>
-                                    <option value="snack2">snack suggestion 2</option>
-                                    <option value="snack3">snack suggestion 3</option>
-                                    <option value="snack4">snack suggestion 4</option>
+                                    {% for snack in snack_options %}
+                                    <option value="{{ snack }}">{{ snack }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </fieldset>
@@ -83,11 +83,11 @@
                                 </label>
                             </div>
                             <div class="shelf">
-                                <input type="text" id="suggestionInput" placeholder="Snack Suggestion" />
+                                <input type="text" name="suggestionInput" id="suggestionInput" placeholder="Snack Suggestion" />
                             </div>
                             <div class="shelf">
                                 <label for="suggestionLocation" class="isHidden">Location</label>
-                                <input type="text" id="suggestionLocation" placeholder="Location" class="" />
+                                <input type="text" name="suggestionLocation" id="suggestionLocation" placeholder="Location" class="" />
                             </div>
                         </fieldset>
                         <input type="submit" value="Suggest this Snack!" class="btn">

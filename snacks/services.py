@@ -11,7 +11,9 @@ def get_snacks():
     return snacks
 
 
-def post_snacks(name, location, latitude, longitude):
-    data = {'name': name, 'location': location, 'latitude': latitude, 'longitude': longitude}
-    headers = {'User-Agent': 'Mozilla/5.0'}
-    requests.post(url, data=params, headers=headers)
+def post_snacks(name, location):
+    data = {'name': name, 'location': location}
+    #headers = {'User-Agent': 'Mozilla/5.0'}
+    
+    output = requests.post(url, data=data)
+    print(output)
