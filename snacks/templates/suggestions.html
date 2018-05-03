@@ -50,10 +50,10 @@
                 <h2 class="hdg hdg_1">Suggestions</h1>
             </div>
             <div class="shelf shelf_2">
-                <div class="error isHidden">You have attempted to add more than the allowed number of suggestions per month!
+                <div class="error{% if error_code != -1 %} isHidden{% endif %}">You have attempted to add more than the allowed number of suggestions per month!
                     <br />There is a total of one allowed suggestion per month.</div>
-                <div class="error isHidden">You have attempted to add a suggestion that already exists!</div>
-                <div class="error isHidden">You have not completed information requested.</div>
+                <div class="error{% if error_code != -2 %} isHidden{% endif %}">You have attempted to add a suggestion that already exists!</div>
+                <div class="error{% if error_code != -3 %} isHidden{% endif %}">You have not completed information requested.</div>
             </div>
             <div class="content-centered">
                 <div class="shelf shelf_2">

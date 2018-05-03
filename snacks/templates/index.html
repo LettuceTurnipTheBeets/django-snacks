@@ -58,14 +58,15 @@
                         <h2 class="hdg hdg_3">Votes Remaining</h2>
                     </div>
                     <div class="voteBox-body">
-                        <p class="counter counter_green isHidden">3</p>
-                        <p class="counter counter_yellow">2</p>
-                        <p class="counter counter_red isHidden">1</p>
+                        <p class="counter counter_green{% if votes_remaining != 3 %} isHidden{% endif %}">3</p>
+                        <p class="counter counter_yellow{% if votes_remaining != 2 %} isHidden{% endif %}">2</p>
+                        <p class="counter counter_red{% if votes_remaining != 1 %} isHidden{% endif %}">1</p>
+                        <p class="counter counter_red{% if votes_remaining != 0 %} isHidden{% endif %}">0</p>
                     </div>
                 </div>
             </div>
             <div class="shelf shelf_2">
-                <p class="error isHidden">Oops! You have already voted the total allowed times this month.<br />Come back next month to vote again!</p>
+                <p class="error{% if not out_of_votes %} isHidden{% endif %}">Oops! You have already voted the total allowed times this month.<br />Come back next month to vote again!</p>
             </div>
             <div class="split">
                 <div class="shelf shelf_2">
