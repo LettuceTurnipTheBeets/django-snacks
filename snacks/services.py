@@ -23,5 +23,4 @@ def post_snacks(name, location):
     except requests.exceptions.RequestException:
         output = 'API Error'
 
-    print(output)
     return output

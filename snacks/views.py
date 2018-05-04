@@ -10,8 +10,9 @@ def voting(request):
 
     snacks_always_purchased = []
     snacks_suggested = []
-    suggested_date = []    
-    votes = []
+    snack_date = []
+    snack_total_votes = []
+    snack_voted_for = []
     error_message = ''
 
     if snacks == 'API Error':
@@ -28,17 +29,16 @@ def voting(request):
                 snacks_suggested.append([item['name']])
             
                 if item['lastPurchaseDate'] == 'null':
-                    suggested_date.append('')
+                    snack_date.append('')
                 else:
-                    suggested_date.append(item['lastPurchaseDate'])
+                    snack_date.append(item['lastPurchaseDate'])
 
                 try:
-                    votes.append(Snack.objects.get(name=item['name']).votes)
+                    snack_total_votes.append(Snack.objects.get(name=item['name']).votes)
                 except Snack.DoesNotExist:
-                    votes.append(Snack.objects.create(name=name, votes=0).votes)
+                    snack_total_votes.append(Snack.objects.create(name=item['name'], votes=0).votes)
 
         if 'votes_remaining' in request.COOKIES:
-            print(request.COOKIES['votes_remaining'])
             create_cookie = False
 
             if int(request.COOKIES['votes_remaining']) < 0:
@@ -52,14 +52,11 @@ def voting(request):
             create_cookie = True
             votes_remaining = 3
 
-        print(snacks_suggested)
         for index, snack in enumerate(snacks_suggested):
-            snack.append(votes[index])
-            snack.append('icon-check_voted')
-            snack.append(suggested_date[index])       
-        print(snacks_suggested)
+            snack.append(snack_total_votes[index])
+            snack.append(snack_voted_for[index])
+            snack.append(snack_date[index])       
 
-    print(votes_remaining)
     response = render(
         request,
         'index.html', {
@@ -149,8 +146,6 @@ def suggest_snack(request):
         suggestion_location = request.POST.get('suggestionLocation')
         error_code = 1
         
-        print('option: {}\ninput: {}\nlocation: {}'.format(snack_option, suggestion_input, suggestion_location))
-
         if int(request.COOKIES['suggestions_remaining']) == 0:
             error_code = -1
         elif not suggestion_input == '' and not suggestion_location == '':
@@ -164,8 +159,6 @@ def suggest_snack(request):
         elif (snack_option is None and suggestion_input == '' and suggestion_location == '') or (suggestion_input == '' and not suggestion_location == '') or (not suggestion_input == '' and suggestion_location == ''):
             error_code = -3
 
-        print(error_code)
-    
     response = HttpResponseRedirect('/suggestions/')
 
     if error_code == 1:
