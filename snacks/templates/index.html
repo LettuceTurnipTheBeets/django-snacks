@@ -67,6 +67,7 @@
             </div>
             <div class="shelf shelf_2">
                 <p class="error{% if not out_of_votes %} isHidden{% endif %}">Oops! You have already voted the total allowed times this month.<br />Come back next month to vote again!</p>
+                <p class="error{% if not api_error %} isHidden{% endif %}">The API is currently down for maintenance.  Please try again another time.</p>
             </div>
             <div class="split">
                 <div class="shelf shelf_2">
