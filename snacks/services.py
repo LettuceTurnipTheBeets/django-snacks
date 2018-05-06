@@ -42,4 +42,15 @@ def post_snacks(name, location):
     return output
 
 def get_expiry_time():
+    """Return the total seconds between now and the end of the month.
+    This is used to set the cookie expiration date.  It is assumed that
+    each month cycle is reset on the 1st of the month.
+    """ 
+    now = datetime.utcnow() - timedelta(hours=5)
 
+    if now.month == 12:
+        next_month = datetime(now.year + 1, 1, 1)
+    else:
+        next_month = datetime(now.year, now.month + 1, 1)
+
+    return (next_month - now).seconds

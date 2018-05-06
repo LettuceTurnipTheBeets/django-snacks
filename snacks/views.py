@@ -254,7 +254,10 @@ def suggest_snack(request):
               suggestion_location == '')):
             error_code = -3
 
-    response = HttpResponseRedirect('/suggestions/')
+    if error_code == 1:  # go to voting page on a succesful suggestion
+        response = HttpResponseRedirect('/voting/')
+    else:
+        response = HttpResponseRedirect('/suggestions/')
 
     if error_code == 1:
         response.set_cookie('suggestions_remaining', 0)
