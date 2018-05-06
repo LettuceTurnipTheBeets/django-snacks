@@ -100,18 +100,18 @@
                                 
                                 <tbody>
                                     {% for snacks in snacks_suggested %}
-                                    <form method="POST" action="vote/{{ snacks.0 }}/" class="form" novalidate>
-                                        {% csrf_token %}
+                                    {% if not snacks.2 %}<form method="POST" action="vote/{{ snacks.0 }}/" class="form" novalidate>
+                                        {% csrf_token %}{% endif %}
                                     <tr>
                                         <td>{{ snacks.0 }}</td>
                                         <td>{{ snacks.1 }}</td>
                                         <td>
-                                            <button class="btn btn_clear"><i class="icon-check {{ snacks.2 }}" type=submit></i>
+                                            <button class="btn btn_clear"><i class="icon-check{% if snacks.2 %} icon-check_voted"{% else %} icon-check_noVote" type=submit{% endif %}></i>
                                             </button>
                                         </td>
                                         <td>{{ snacks.3 }}</td>
                                     </tr>
-                                    </form>
+                                    {% if not snacks.2 %}</form>{% endif %}
                                     {% endfor %}
                                 </tbody>
                             

@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-SESSION_COOKIE_AGE = 2592000 # Cookies will expire 1-month after creation
+SESSION_COOKIE_AGE = 2592000  # Cookies will expire 1-month after creation
 
 ROOT_URLCONF = 'djangorest.urls'
 
