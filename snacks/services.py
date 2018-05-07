@@ -1,13 +1,13 @@
 import requests
 import subprocess
-from datetime import datetime  
-from datetime import timedelta  
+from datetime import datetime
+from datetime import timedelta
 from settings_secret import url, api_key
 url = url + api_key
 
 
 def get_snacks():
-    """Return the output of a GET request to the API.  
+    """Return the output of a GET request to the API.
     If successful it returns a dictionary of the json response.
     If unsuccessful, it returns 'API Error'.
     """
@@ -41,11 +41,12 @@ def post_snacks(name, location):
 
     return output
 
+
 def get_expiry_time():
     """Return the total seconds between now and the end of the month.
     This is used to set the cookie expiration date.  It is assumed that
     each month cycle is reset on the 1st of the month.
-    """ 
+    """
     now = datetime.utcnow() - timedelta(hours=5)
 
     if now.month == 12:
@@ -53,4 +54,4 @@ def get_expiry_time():
     else:
         next_month = datetime(now.year, now.month + 1, 1)
 
-    return (next_month - now).seconds
+    return int((next_month - now).total_seconds())
