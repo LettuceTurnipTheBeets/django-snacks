@@ -59,7 +59,7 @@ def voting(request):
                 if obj.month_last_suggested == month:
                     snacks_suggested.append([item['name']])
 
-                    if item['lastPurchaseDate'] == 'null':
+                    if item['lastPurchaseDate'] is None:
                         snack_date.append('')
                     else:
                         snack_date.append(item['lastPurchaseDate'])
