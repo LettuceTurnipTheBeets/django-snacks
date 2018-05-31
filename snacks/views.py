@@ -54,7 +54,11 @@ def voting(request):
             if not item['optional']:
                 snacks_always_purchased.append(item['name'])
             elif item['optional']:
-                obj = Snack.objects.get(name=str(item['name']))
+                try: 
+                    obj = Snack.objects.get(name=str(item['name']))
+                except Snack.DoesNotExist:
+                    month = (datetime.utcnow() - timedelta(hours=5)).month
+                    obj = Snack.objects.create(name=str(item['name']), votes=0, month_last_suggested=month)
                 month = (datetime.utcnow() - timedelta(hours=5)).month
                 if obj.month_last_suggested == month:
                     snacks_suggested.append([item['name']])
@@ -204,7 +208,11 @@ def suggestions(request):
         snack_options = []
         for item in snacks:
             if item['optional']:
-                obj = Snack.objects.get(name=str(item['name']))
+                try:
+                    obj = Snack.objects.get(name=str(item['name']))
+                except Snack.DoesNotExist:
+                   month = (datetime.utcnow() - timedelta(hours=5)).month
+                   obj = Snack.objects.create(name=str(item['name']), votes=0, month_last_suggested=month)
                 month = (datetime.utcnow() - timedelta(hours=5)).month
                 if obj.month_last_suggested != month:
                     snack_options.append(item['name'])
